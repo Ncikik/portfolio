@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "bind": {
+    "name": "ตัวอย่าง โปรไฟล์",
+    "greeting": "สวัสดีครับ ผมชื่อ",
+    "eyebrow": "ตัวอย่างข้อมูล",
+    "role": "นักศึกษาเทคโนโลยีสารสนเทศ (ข้อมูลตัวอย่าง)",
+    "profileTagline": "IT Student · Web Developer",
+    "heroLead": "นี่คือหน้าตัวอย่างสำหรับดูว่าเว็บจะแสดงผลอย่างไรเมื่อมีข้อมูลของแต่ละคน เนื้อหาทั้งหมดในหน้านี้เป็นข้อความสมมติ และแก้ได้จากโหมดแก้ไข",
+    "about1": "หน้านี้ถูกสร้างจากไฟล์ข้อมูลของโปรไฟล์ชื่อ demo ซึ่งแยกจากโปรไฟล์อื่นโดยสมบูรณ์",
+    "about2": "แต่ละคนมีไฟล์ people/<ชื่อผู้ใช้>/data.json ของตัวเอง ข้อมูลจึงไม่ปนกัน และไม่ต้องมีระบบล็อกอิน",
+    "about3": "ดีไซน์ สี และสคริปต์ใช้ร่วมกันทั้งเว็บ ดังนั้นถ้าแก้ที่ไฟล์กลาง ทุกโปรไฟล์จะเปลี่ยนตามทันที",
+    "education": "ปวส. เทคโนโลยีสารสนเทศ",
+    "location": "ประเทศไทย",
+    "goal": "Junior Web Developer",
+    "interests": "Web App · UI/UX · API",
+    "footerTagline": "เว็บนี้เป็นข้อมูลตัวอย่าง\nสำหรับสาธิตระบบหลายโปรไฟล์",
+    "contactLead": "ช่องทางติดต่อในหน้านี้เป็นข้อมูลสมมติ ใช้ดูตัวอย่างการแสดงผลเท่านั้น"
+  },
+  "lists": {
+    "skillsFrontend": ["HTML", "CSS", "JavaScript", "Responsive Design"],
+    "skillsBackend": ["Node.js", "REST API", "MySQL"],
+    "skillsTools": ["Git", "GitHub", "VS Code", "Figma"]
+  },
+  "contacts": {
+    "email": "demo@example.com",
+    "github": "",
+    "facebook": "",
+    "line": ""
+  },
+  "projects": [
+    {
+      "type": "เว็บแอป",
+      "year": "2026",
+      "title": "โปรเจกต์ตัวอย่างที่ 1",
+      "desc": "คำอธิบายสั้น ๆ ว่าทำอะไร ใช้เทคโนโลยีอะไร และผลลัพธ์เป็นอย่างไร",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "demoUrl": "https://example.com",
+      "repoUrl": "https://github.com",
+      "image": ""
+    },
+    {
+      "type": "เว็บไซต์",
+      "year": "2026",
+      "title": "โปรเจกต์ตัวอย่างที่ 2",
+      "desc": "การ์ดผลงานแต่ละใบแก้ข้อความและรูปได้จากโหมดแก้ไข โดยไม่ต้องแตะโค้ด",
+      "tags": ["Responsive", "UI/UX"],
+      "demoUrl": "https://example.com",
+      "repoUrl": "",
+      "image": ""
+    },
+    {
+      "type": "เว็บแอป",
+      "year": "2025",
+      "title": "โปรเจกต์ตัวอย่างที่ 3",
+      "desc": "เว้นลิงก์ใดว่างไว้ ระบบจะซ่อนปุ่มนั้นให้อัตโนมัติ",
+      "tags": ["JavaScript", "localStorage"],
+      "demoUrl": "",
+      "repoUrl": "https://github.com",
+      "image": ""
+    },
+    {
+      "type": "งานออกแบบ",
+      "year": "2025",
+      "title": "โปรเจกต์ตัวอย่างที่ 4",
+      "desc": "ใช้พื้นที่นี้เล่าเป้าหมายของงาน สิ่งที่ได้เรียนรู้ และสิ่งที่ภูมิใจ",
+      "tags": ["Wireframe", "Prototype"],
+      "demoUrl": "https://example.com",
+      "repoUrl": "https://github.com",
+      "image": ""
+    }
+  ],
+  "profileImage": ""
+}

@@ -660,7 +660,7 @@
 
     <div class="container footer-bottom">
       <p>© <span id="year">2026</span> <span data-bind="name">ชื่อ-นามสกุล</span>. สงวนลิขสิทธิ์.</p>
-      <p>สร้างด้วย HTML, CSS และ JavaScript</p>
+      <p>สร้างด้วย HTML, CSS และ JavaScript · <a href="people/">พอร์ตโฟลิโอทั้งหมด</a></p>
     </div>
   </footer>
 
@@ -678,6 +678,12 @@
   </noscript>
 
   <script src="script.js" defer></script>
+
+  <!--
+    โหลดข้อมูลของเจ้าของโปรไฟล์ (?u=ชื่อผู้ใช้) ก่อนไฟล์อื่น
+    ถ้าไม่มีไฟล์ people/<ชื่อผู้ใช้>/data.json จะใช้ข้อความตัวอย่างในหน้านี้
+  -->
+  <script src="profile.js"></script>
 
   <!--
     โหลดตัวแก้ไขข้อมูลเฉพาะตอนเปิดในเครื่อง หรือเพิ่ม ?edit=1 ท้าย URL

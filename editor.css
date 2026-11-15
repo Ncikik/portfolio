@@ -114,6 +114,37 @@ body.editor-open {
   line-height: 1.6;
 }
 
+/* แถบแสดงชื่อโปรไฟล์ที่กำลังแก้ */
+.editor-profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px !important;
+}
+
+.editor-profile strong {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.editor-profile a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.editor-footer-note code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-size: 0.92em;
+}
+
 .editor-close {
   display: grid;
   place-items: center;

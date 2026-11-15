@@ -17,7 +17,22 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "portfolio-content-v1";
+  const PROFILE = window.PortfolioProfile || null;
+  const PROFILE_SLUG = PROFILE ? PROFILE.slug : "me";
+  const STORAGE_KEY = PROFILE ? PROFILE.storageKey : "portfolio-content-v1";
+
+  /** ลิงก์หน้าจริงของโปรไฟล์ที่กำลังแก้ (ตัด ?edit ออก) */
+  function profileUrl() {
+    const url = new URL(location.href);
+    url.search = "?u=" + PROFILE_SLUG;
+    url.hash = "";
+    return url.href;
+  }
+
+  /** ตำแหน่งไฟล์ข้อมูลบน GitHub */
+  function dataPath() {
+    return `people/${PROFILE_SLUG}/data.json`;
+  }
 
   /* คำสั่งซ้าย = ชื่อคีย์ใน data-bind ของ index.html */
   const BIND_KEYS = [
@@ -702,6 +717,8 @@
       <header class="editor-header">
         <div>
           <h2 id="editor-title">แก้ไขข้อมูลเว็บไซต์</h2>
+          <p class="editor-profile">โปรไฟล์: <strong data-editor-slug>${PROFILE_SLUG}</strong>
+            <span>· <a href="${profileUrl()}" data-editor-link>เปิดหน้าจริง</a></span></p>
           <p>แก้ข้อความแล้วกด “บันทึก” ข้อมูลจะถูกเก็บในเบราว์เซอร์นี้</p>
         </div>
         <button class="editor-close" type="button" data-editor-close aria-label="ปิดหน้าต่างแก้ไข">
@@ -734,15 +751,15 @@
             </button>
             <button class="editor-btn" type="button" data-editor-download>
               <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
-              ดาวน์โหลด index.html
+              ดาวน์โหลด data.json
             </button>
             <button class="editor-btn editor-btn-danger" type="button" data-editor-reset>
               ล้างข้อมูลที่บันทึก
             </button>
           </div>
           <p class="editor-footer-note">
-            ข้อมูลอยู่ในเบราว์เซอร์นี้เท่านั้น · ดาวน์โหลด index.html แล้วอัปโหลดทับบน GitHub
-            เพื่อให้ผู้ชมเห็นการแก้ไข
+            ข้อมูลอยู่ในเบราว์เซอร์นี้เท่านั้น · ดาวน์โหลด <code>data.json</code> แล้วอัปโหลดทับ
+            <code data-editor-path></code> บน GitHub เพื่อให้ทุกคนเห็นข้อมูลใหม่
           </p>
         </footer>
       </form>
@@ -942,40 +959,10 @@
   }
 
   /* -----------------------------------------------------------------------
-     ดาวน์โหลด index.html ที่ฝังข้อมูลล่าสุดแล้ว
+     ดาวน์โหลดข้อมูลของโปรไฟล์นี้ (data.json) เพื่อนำไปอัปโหลดทับบน GitHub
      ----------------------------------------------------------------------- */
-  function buildDownloadHTML() {
-    const clone = document.documentElement.cloneNode(true);
-
-    // เอาเฉพาะส่วนของตัวแก้ไขออก เพื่อไม่ให้ติดไปในไฟล์ที่เผยแพร่
-    clone
-      .querySelectorAll(
-        ".editor-launcher, .editor-backdrop, .editor-panel, .editor-toast, [data-editor-asset]"
-      )
-      .forEach((node) => node.remove());
-
-    // คืนค่าสถานะที่สคริปต์หน้าเว็บเติมตอนรัน ให้กลับเป็นค่าเริ่มต้น
-    clone.querySelectorAll(".reveal").forEach((node) => node.classList.remove("is-visible"));
-    clone.querySelectorAll(".nav-links").forEach((node) => node.classList.remove("is-open"));
-    clone.querySelectorAll(".site-header").forEach((node) => node.classList.remove("is-scrolled"));
-    clone.querySelectorAll(".back-to-top").forEach((node) => node.classList.remove("is-visible"));
-    clone.querySelectorAll("[aria-current]").forEach((node) => node.removeAttribute("aria-current"));
-    clone.querySelectorAll("[aria-expanded]").forEach((node) => node.setAttribute("aria-expanded", "false"));
-    clone.querySelectorAll("[data-menu-toggle]").forEach((node) => {
-      node.setAttribute("aria-label", "เปิดเมนู");
-    });
-
-    const body = clone.querySelector("body");
-    if (body) body.classList.remove("editor-open", "menu-open");
-
-    clone.classList.remove("js");
-    clone.setAttribute("data-theme", "light");
-
-    return "<!DOCTYPE html>\n" + clone.outerHTML + "\n";
-  }
-
-  function downloadFile(content, filename) {
-    const blob = new Blob([content], { type: "text/html;charset=utf-8" });
+  function downloadFile(content, filename, mime) {
+    const blob = new Blob([content], { type: mime || "application/json;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
 
@@ -995,11 +982,11 @@
     applyData(data);
     const saved = persist(data);
 
-    downloadFile(buildDownloadHTML(), "index.html");
+    downloadFile(JSON.stringify(data, null, 2), "data.json", "application/json;charset=utf-8");
     showToast(
       saved
-        ? "ดาวน์โหลด index.html แล้ว — นำไฟล์ไปอัปโหลดทับไฟล์เดิมบน GitHub ได้เลย"
-        : "ดาวน์โหลด index.html แล้ว แต่บันทึกในเบราว์เซอร์ไม่สำเร็จ (ไฟล์ที่ดาวน์โหลดยังมีข้อมูลครบ)"
+        ? "ดาวน์โหลด data.json แล้ว — นำไปอัปโหลดทับ " + dataPath() + " บน GitHub"
+        : "ดาวน์โหลด data.json แล้ว แต่บันทึกในเบราว์เซอร์ไม่สำเร็จ (ไฟล์ที่ดาวน์โหลดยังมีข้อมูลครบ)"
     );
   }
 
@@ -1095,12 +1082,25 @@
 
     buildLauncher();
     buildPanel();
+
+    const pathEl = $("[data-editor-path]", panel);
+    if (pathEl) pathEl.textContent = dataPath();
+
     syncFormFromDOM();
   }
 
+  /* รอให้ profile.js โหลดข้อมูลโปรไฟล์เสร็จก่อน แล้วค่อยอ่านค่าจากหน้าเว็บ */
+  function start() {
+    if (PROFILE && PROFILE.ready && typeof PROFILE.ready.then === "function") {
+      PROFILE.ready.then(init, init);
+    } else {
+      init();
+    }
+  }
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", start);
   } else {
-    init();
+    start();
   }
 })();

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>พอร์ตโฟลิโอทั้งหมด | Portfolio</title>
+  <meta name="description" content="รวมลิงก์พอร์ตโฟลิโอของทุกคนในเว็บชุดนี้ เลือกดูรายคนได้เลย">
+  <meta name="theme-color" content="#f6f8fc">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --bg-soft: #edf3fb;
+      --surface: #ffffff;
+      --text: #0c1a32;
+      --muted: #5a6b85;
+      --border: #dbe4f2;
+      --primary: #1d4ed8;
+      --primary-2: #0ea5e9;
+      --primary-soft: #e3edff;
+      --on-primary: #ffffff;
+      --shadow-md: 0 12px 32px rgba(15, 35, 70, 0.08);
+      --shadow-lg: 0 24px 60px rgba(15, 35, 70, 0.12);
+      --radius-md: 16px;
+      --radius-lg: 24px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #07101f;
+        --bg-soft: #0a1628;
+        --surface: #0e1b30;
+        --text: #e9f0fc;
+        --muted: #9db0cc;
+        --border: #1d3050;
+        --primary: #6ea8fe;
+        --primary-2: #38bdf8;
+        --primary-soft: rgba(110, 168, 254, 0.14);
+        --on-primary: #06101f;
+        --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    *,
+    *::before,
+    *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 40px 20px 64px;
+      background:
+        radial-gradient(900px 480px at 15% -10%, var(--primary-soft), transparent 70%),
+        radial-gradient(700px 400px at 95% 0%, rgba(14, 165, 233, 0.12), transparent 65%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans Thai", "Prompt", system-ui, -apple-system, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap { width: 100%; max-width: 980px; margin: 0 auto; }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 34px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .brand:hover { color: var(--primary); }
+
+    .brand-arrow { font-size: 1.05rem; }
+
+    h1 {
+      margin: 0 0 12px;
+      font-family: "Prompt", "Noto Sans Thai", sans-serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    h1 span { color: var(--primary); }
+
+    .lead {
+      max-width: 58ch;
+      margin: 0 0 36px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: 100%;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: var(--on-primary);
+      font-family: "Prompt", sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-family: "Prompt", "Noto Sans Thai", sans-serif;
+      font-size: 1.06rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .card-cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .empty {
+      padding: 30px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .howto {
+      margin-top: 46px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .howto summary {
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .howto code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-size: 0.86em;
+    }
+
+    .howto ol { margin: 14px 0 0; padding-left: 20px; }
+    .howto li { margin-bottom: 6px; }
+
+    .foot {
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 28px 16px 48px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+      .card:hover, .card:focus-visible { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="brand" href="../">
+      <span class="brand-arrow" aria-hidden="true">←</span>
+      กลับไปหน้าหลัก
+    </a>
+
+    <h1>พอร์ตโฟลิโอ<span>ของทุกคน</span></h1>
+    <p class="lead">
+      แต่ละคนมีข้อมูลของตัวเองแยกกันโดยสมบูรณ์ เลือกการ์ดด้านล่างเพื่อเปิดพอร์ตโฟลิโอของคนนั้น
+      (ลิงก์ตรงใช้รูปแบบ <code>?u=ชื่อผู้ใช้</code>)
+    </p>
+
+    <ul class="grid" data-people>
+      <li class="empty">กำลังโหลดรายชื่อ…</li>
+    </ul>
+
+    <details class="howto">
+      <summary>วิธีเพิ่มคนใหม่ (สำหรับเจ้าของเว็บ)</summary>
+      <ol>
+        <li>สร้างโฟลเดอร์ใหม่ใน GitHub: <code>people/ชื่อผู้ใช้</code> (ใช้ a-z, 0-9, ขีดกลาง)</li>
+        <li>เปิด <code>?u=ชื่อผู้ใช้&amp;edit=1</code> แล้วกรอกข้อมูลของคนนั้น</li>
+        <li>กด <strong>บันทึก</strong> แล้วกด <strong>ดาวน์โหลด data.json</strong></li>
+        <li>อัปโหลดไฟล์ที่ได้เป็น <code>people/ชื่อผู้ใช้/data.json</code></li>
+        <li>เพิ่มรายชื่อในไฟล์ <code>people/people.json</code> เพื่อให้ขึ้นการ์ดในหน้านี้</li>
+      </ol>
+    </details>
+
+    <p class="foot">ทุกคนใช้ไฟล์ดีไซน์และสคริปต์ร่วมกัน แก้ที่เดียวจึงมีผลกับทุกโปรไฟล์</p>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      /* รายชื่อสำรอง ใช้เมื่อเปิดไฟล์ในเครื่อง (fetch ไฟล์ JSON ไม่ได้) */
+      const FALLBACK = [
+        { slug: "me", name: "ชื่อ-นามสกุล", role: "นักศึกษาเทคโนโลยีสารสนเทศ · Web Developer", initials: "CN" },
+        { slug: "demo", name: "ตัวอย่าง โปรไฟล์", role: "เดโม — ดูหน้าตาเว็บของคนอื่น", initials: "ตต" }
+      ];
+
+      const list = document.querySelector("[data-people]");
+
+      function initialsOf(person) {
+        if (person.initials) return String(person.initials).slice(0, 3);
+        const parts = String(person.name || "").trim().split(/\s+/).filter(Boolean);
+        if (!parts.length) return "?";
+        if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+        return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+      }
+
+      function render(people) {
+        if (!list) return;
+        list.textContent = "";
+
+        if (!Array.isArray(people) || people.length === 0) {
+          const empty = document.createElement("li");
+          empty.className = "empty";
+          empty.textContent = "ยังไม่มีรายชื่อ — เพิ่มได้ใน people/people.json";
+          list.appendChild(empty);
+          return;
+        }
+
+        people.forEach((person) => {
+          const slug = String(person.slug || "").toLowerCase();
+          if (!/^[a-z0-9](?:[a-z0-9-]{0,31})$/.test(slug)) return;
+
+          const item = document.createElement("li");
+          const card = document.createElement("a");
+          card.className = "card";
+          card.href = "../?u=" + encodeURIComponent(slug);
+
+          const avatar = document.createElement("span");
+          avatar.className = "avatar";
+          avatar.setAttribute("aria-hidden", "true");
+          avatar.textContent = initialsOf(person);
+
+          const name = document.createElement("h2");
+          name.textContent = person.name || slug;
+
+          const role = document.createElement("p");
+          role.textContent = person.role || "";
+
+          const cta = document.createElement("span");
+          cta.className = "card-cta";
+          cta.textContent = "ดูพอร์ตโฟลิโอ →";
+
+          card.append(avatar, name, role, cta);
+          item.appendChild(card);
+          list.appendChild(item);
+        });
+      }
+
+      fetch("people.json", { cache: "no-store" })
+        .then((response) => (response.ok ? response.json() : null))
+        .then((data) => render(data && Array.isArray(data.people) ? data.people : FALLBACK))
+        .catch(() => render(FALLBACK));
+    })();
+  </script>
+</body>
+</html>

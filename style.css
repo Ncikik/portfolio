@@ -1638,6 +1638,17 @@ html[data-theme="dark"] .skill-icon-indigo {
   font-size: 0.74rem;
 }
 
+.footer-bottom a {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+  border-bottom-color: currentColor;
+}
+
 /* ------------------------------ 11. ปุ่มกลับขึ้นด้านบน ------------------------------ */
 .back-to-top {
   position: fixed;
