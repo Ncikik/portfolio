@@ -1,0 +1,504 @@
+/* =========================================================================
+   EDITOR.CSS — สไตล์ของโหมดแก้ไขข้อมูล
+   ไฟล์นี้ถูกโหลดเฉพาะตอนเปิดในเครื่อง หรือเพิ่ม ?edit=1 ท้าย URL
+   ผู้เข้าชมเว็บปกติจะไม่โหลดไฟล์นี้
+   ========================================================================= */
+
+body.editor-open {
+  overflow: hidden;
+}
+
+/* ปุ่มลอยสำหรับเปิดหน้าต่างแก้ไข */
+.editor-launcher {
+  position: fixed;
+  right: 22px;
+  /* อยู่เหนือปุ่มกลับขึ้นด้านบนเล็กน้อย เพื่อไม่ให้ทับกัน */
+  bottom: 84px;
+  z-index: 180;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 14px 34px rgba(15, 35, 70, 0.28);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.editor-launcher:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px rgba(15, 35, 70, 0.34);
+}
+
+.editor-launcher:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.editor-launcher svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* พื้นหลังมืดด้านหลังหน้าต่าง */
+.editor-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  background: rgba(3, 10, 22, 0.58);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.editor-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* หน้าต่างแก้ไข */
+.editor-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  width: min(460px, 100%);
+  background: var(--surface);
+  color: var(--text);
+  border-left: 1px solid var(--border);
+  box-shadow: -24px 0 70px rgba(3, 10, 22, 0.24);
+  transform: translateX(102%);
+  visibility: hidden;
+  transition: transform 0.28s var(--ease), visibility 0.28s ease;
+}
+
+.editor-panel.is-open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.editor-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.editor-header h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.editor-header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.editor-close {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.editor-close:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.editor-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* พื้นที่ฟอร์มที่เลื่อนได้ */
+.editor-form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 22px 24px;
+}
+
+.editor-section {
+  margin: 0 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.editor-section summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 15px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.editor-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.editor-section summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 16px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.editor-section[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.editor-section-body {
+  display: grid;
+  gap: 13px;
+  padding: 2px 15px 16px;
+}
+
+.editor-field {
+  display: grid;
+  gap: 5px;
+}
+
+.editor-field > span,
+.editor-field > label {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.editor-field small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.editor-field input,
+.editor-field textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 9px 11px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.editor-field textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.editor-field input:focus,
+.editor-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.editor-field input::placeholder,
+.editor-field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* กลุ่มโปรเจกต์ */
+.editor-project {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.editor-project-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.editor-project-head span {
+  color: var(--primary);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.editor-project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.editor-project-grid .editor-field {
+  min-width: 0;
+}
+
+/* รูปภาพ */
+.editor-image-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.editor-image-preview {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  overflow: hidden;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+.editor-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.editor-file-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.editor-file-label:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.editor-file-label input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.editor-clear-image {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.editor-clear-image:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+/* แถบปุ่มด้านล่าง */
+.editor-footer {
+  display: grid;
+  gap: 9px;
+  padding: 14px 22px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.editor-footer-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.editor-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.editor-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.editor-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+}
+
+.editor-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.editor-btn-primary {
+  grid-column: 1 / -1;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(15, 35, 70, 0.2);
+}
+
+.editor-btn-primary:hover {
+  border-color: transparent;
+}
+
+.editor-btn-danger {
+  color: #dc2626;
+}
+
+.editor-btn-danger:hover {
+  border-color: #dc2626;
+}
+
+/* แจ้งเตือนเล็ก ๆ */
+.editor-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 260;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 11px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background: #0c1a32;
+  color: #fff;
+  font-size: 12.5px;
+  line-height: 1.55;
+  text-align: center;
+  box-shadow: 0 16px 42px rgba(3, 10, 22, 0.34);
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+.editor-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* ล็อกการเลื่อนพื้นหลังบนมือถือ */
+@media (max-width: 560px) {
+  .editor-launcher {
+    right: 14px;
+    bottom: 68px;
+  }
+
+  .editor-panel {
+    width: 100%;
+    border-left: 0;
+  }
+
+  .editor-header,
+  .editor-scroll,
+  .editor-footer {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  .editor-project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-btn-primary {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editor-panel,
+  .editor-backdrop,
+  .editor-launcher,
+  .editor-toast {
+    transition-duration: 0.01ms;
+  }
+}

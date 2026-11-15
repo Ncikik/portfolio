@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คู่มือนำเว็บพอร์ตโฟลิโอขึ้น GitHub Pages</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0a1a31;
+      --navy-2: #0f2f57;
+      --blue: #1d4ed8;
+      --cyan: #0ea5e9;
+      --sky: #7dd3fc;
+      --ink: #10213d;
+      --muted: #5b6b85;
+      --line: #dbe4f2;
+      --soft: #f1f6fd;
+      --white: #ffffff;
+      --green: #15803d;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --font-head: "Prompt", "Noto Sans Thai", "Leelawadee UI", "Tahoma", sans-serif;
+      --font-body: "Noto Sans Thai", "Leelawadee UI", "Tahoma", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: #e8eef7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body { font-size: 10pt; line-height: 1.6; }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: var(--font-head);
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    strong { font-weight: 600; }
+
+    .page {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      padding: 15mm 16mm 12mm;
+      overflow: hidden;
+      page-break-after: always;
+      background: var(--white);
+    }
+
+    .page:last-child { page-break-after: auto; }
+
+    @media screen {
+      body { padding: 24px 12px 40px; }
+      .page {
+        margin: 0 auto 26px;
+        border-radius: 8px;
+        box-shadow: 0 18px 50px rgba(10, 26, 49, 0.18);
+      }
+      .print-btn {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 18px;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--blue), var(--cyan));
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 10pt;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 12px 30px rgba(29, 78, 216, 0.35);
+      }
+    }
+
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; border-radius: 0; box-shadow: none; }
+      .print-btn { display: none !important; }
+    }
+
+    /* ---------- องค์ประกอบร่วม ---------- */
+    .page-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 9mm;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8pt;
+      letter-spacing: 0.04em;
+    }
+
+    .page-top .mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      font-family: var(--font-head);
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .mark-symbol {
+      display: grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .page-number {
+      font-family: var(--font-head);
+      font-weight: 500;
+    }
+
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3mm;
+      color: var(--blue);
+      font-family: var(--font-head);
+      font-size: 7.5pt;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 20px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    }
+
+    .page h2 {
+      margin-bottom: 3mm;
+      font-size: 22pt;
+      letter-spacing: -0.03em;
+    }
+
+    .page-intro {
+      max-width: 160mm;
+      margin-bottom: 7mm;
+      color: var(--muted);
+      font-size: 9.5pt;
+    }
+
+    .dot { color: var(--cyan); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 4mm;
+      background: var(--white);
+      box-shadow: 0 2px 8px rgba(16, 33, 61, 0.04);
+    }
+
+    .soft-card {
+      border: 1px solid var(--line);
+      border-radius: 4mm;
+      background: var(--soft);
+    }
+
+    .label {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #e3edff;
+      color: var(--blue);
+      font-size: 7pt;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+    }
+
+    .small { font-size: 8.5pt; }
+    .muted { color: var(--muted); }
+
+    code, .code {
+      font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+      font-size: 8.4pt;
+      font-variant-ligatures: none;
+      font-feature-settings: "liga" 0, "calt" 0;
+      overflow-wrap: anywhere;
+    }
+
+    .code {
+      display: block;
+      padding: 3mm 3.5mm;
+      border: 1px solid #dbe4f2;
+      border-radius: 2.5mm;
+      background: #0c1a32;
+      color: #dbeafe;
+      line-height: 1.65;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .code .c { color: #7dd3fc; }
+    .code .v { color: #bbf7d0; }
+
+    /* ---------- หน้าปก ---------- */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      color: #fff;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.25), transparent 34%),
+        radial-gradient(circle at 4% 92%, rgba(37, 99, 235, 0.34), transparent 38%),
+        linear-gradient(145deg, #081628, #0b2342 55%, #0b4d67);
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      right: -42mm;
+      top: -38mm;
+      width: 130mm;
+      height: 130mm;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 50%;
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      right: 18mm;
+      bottom: 30mm;
+      width: 48mm;
+      height: 48mm;
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      border-radius: 50%;
+    }
+
+    .cover-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 18mm;
+    }
+
+    .cover-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: #bae6fd;
+      font-size: 7.5pt;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .cover h1 {
+      max-width: 150mm;
+      margin-top: 17mm;
+      font-size: 39pt;
+      line-height: 1.16;
+      letter-spacing: -0.045em;
+    }
+
+    .cover h1 span {
+      display: block;
+      color: #7dd3fc;
+    }
+
+    .cover-sub {
+      max-width: 132mm;
+      margin-top: 7mm;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 11pt;
+      line-height: 1.7;
+    }
+
+    .cover-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8mm;
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border: 1px solid rgba(125, 211, 252, 0.28);
+      border-radius: 8px;
+      background: rgba(125, 211, 252, 0.08);
+      color: #e0f2fe;
+      font-size: 8pt;
+      font-weight: 500;
+    }
+
+    .cover-badge b { color: #7dd3fc; font-weight: 700; }
+
+    .cover-card {
+      margin-top: auto;
+      padding: 8mm;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 5mm;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .cover-card h3 {
+      margin-bottom: 4mm;
+      color: #fff;
+      font-size: 10pt;
+    }
+
+    .cover-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+    }
+
+    .cover-list li {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 8pt;
+      line-height: 1.55;
+    }
+
+    .cover-list b {
+      display: block;
+      margin-bottom: 1mm;
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 8.5pt;
+      font-weight: 600;
+    }
+
+    .cover-foot {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20mm;
+      margin-top: 8mm;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 7.5pt;
+    }
+
+    .cover-foot strong { color: #fff; font-weight: 500; }
+
+    /* ---------- หน้าถัดไป ---------- */
+    .content-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .file-tree {
+      padding: 4mm 5mm;
+      border: 1px dashed #b9cbe6;
+      border-radius: 3mm;
+      background: #f8fbff;
+      color: #334155;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 8pt;
+      line-height: 1.75;
+    }
+
+    .file-tree b { color: var(--blue); }
+    .file-tree .req { color: var(--green); }
+
+    .checklist {
+      display: grid;
+      gap: 2.2mm;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 2.4mm;
+      color: #334155;
+      font-size: 8.4pt;
+      line-height: 1.5;
+    }
+
+    .checkbox {
+      width: 3.4mm;
+      height: 3.4mm;
+      flex: none;
+      margin-top: 1mm;
+      border: 1px solid #94a3b8;
+      border-radius: 1mm;
+      background: #fff;
+    }
+
+    .number-list {
+      display: grid;
+      gap: 4mm;
+      counter-reset: step;
+    }
+
+    .number-item {
+      display: grid;
+      grid-template-columns: 9mm 1fr;
+      gap: 3.5mm;
+      align-items: start;
+      counter-increment: step;
+    }
+
+    .number-item::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 9mm;
+      height: 9mm;
+      border-radius: 50%;
+      background: #e3edff;
+      color: var(--blue);
+      font-family: var(--font-head);
+      font-size: 10pt;
+      font-weight: 700;
+    }
+
+    .number-item h3 {
+      margin-bottom: 1mm;
+      font-size: 10.5pt;
+    }
+
+    .number-item p {
+      color: var(--muted);
+      font-size: 8.6pt;
+      line-height: 1.6;
+    }
+
+    .number-item p + p { margin-top: 1mm; }
+
+    .callout {
+      display: flex;
+      gap: 3mm;
+      padding: 4mm 4.5mm;
+      border: 1px solid #f3d38a;
+      border-left: 3px solid #f59e0b;
+      border-radius: 2.5mm;
+      background: #fffbeb;
+      color: #78350f;
+      font-size: 8.4pt;
+      line-height: 1.6;
+    }
+
+    .callout.blue {
+      border-color: #bfdbfe;
+      border-left-color: #3b82f6;
+      background: #eff6ff;
+      color: #1e3a8a;
+    }
+
+    .callout.green {
+      border-color: #bbf7d0;
+      border-left-color: #22c55e;
+      background: #f0fdf4;
+      color: #14532d;
+    }
+
+    .callout-icon {
+      display: grid;
+      place-items: center;
+      width: 6.5mm;
+      height: 6.5mm;
+      flex: none;
+      border-radius: 50%;
+      background: currentColor;
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 8pt;
+      font-weight: 700;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 8.2pt;
+      line-height: 1.5;
+    }
+
+    .table th {
+      padding: 2.5mm 3mm;
+      border-bottom: 1px solid #cbd5e1;
+      color: #475569;
+      font-family: var(--font-head);
+      font-size: 7.6pt;
+      font-weight: 600;
+      text-align: left;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .table td {
+      padding: 2.6mm 3mm;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+      color: #334155;
+    }
+
+    .table tr:last-child td { border-bottom: 0; }
+
+    .table .fix { color: #1e3a8a; }
+
+    .url-box {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      padding: 4mm;
+      border: 1px solid #bfdbfe;
+      border-radius: 3mm;
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 9pt;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+
+    .url-box .label { flex: none; background: #dbeafe; }
+
+    .step-card {
+      padding: 4.5mm;
+      border: 1px solid var(--line);
+      border-radius: 3.5mm;
+      background: #fff;
+    }
+
+    .step-card h3 {
+      margin-bottom: 1.5mm;
+      font-size: 9.5pt;
+    }
+
+    .step-card p {
+      color: var(--muted);
+      font-size: 8pt;
+      line-height: 1.55;
+    }
+
+    .step-card .mini-num {
+      display: inline-grid;
+      place-items: center;
+      width: 5.5mm;
+      height: 5.5mm;
+      margin-right: 1.5mm;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 7.5pt;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2mm;
+      align-items: stretch;
+      margin-top: 5mm;
+    }
+
+    .flow-item {
+      position: relative;
+      padding: 4mm 3mm;
+      border: 1px solid var(--line);
+      border-radius: 3mm;
+      background: #f8fbff;
+      text-align: center;
+    }
+
+    .flow-item b {
+      display: block;
+      color: var(--blue);
+      font-family: var(--font-head);
+      font-size: 8pt;
+      font-weight: 600;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 1mm;
+      color: var(--muted);
+      font-size: 7.2pt;
+      line-height: 1.45;
+    }
+
+    .flow-item:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -2.6mm;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 10pt;
+    }
+
+    .page-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: auto;
+      padding-top: 6mm;
+      border-top: 1px solid var(--line);
+      color: #94a3b8;
+      font-size: 7.5pt;
+    }
+
+    .page-footer b { color: var(--muted); font-weight: 500; }
+
+    .tight { margin-top: 3mm; }
+    .mt-4 { margin-top: 4mm; }
+    .mt-6 { margin-top: 6mm; }
+    .mb-3 { margin-bottom: 3mm; }
+  </style>
+</head>
+
+<body>
+  <button class="print-btn" type="button" onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button>
+
+  <!-- ===================== หน้า 1: ปก ===================== -->
+  <section class="page cover">
+    <div class="cover-inner">
+      <span class="cover-label">Portfolio Playbook · 2026</span>
+
+      <h1>ขึ้นเว็บพอร์ตโฟลิโอ<span>ด้วย GitHub Pages</span></h1>
+
+      <p class="cover-sub">
+        คู่มือทีละขั้นสำหรับนำเว็บ HTML / CSS / JavaScript ของคุณ
+        ขึ้นออนไลน์ฟรี โดยใช้ GitHub Desktop — ไม่ต้องพิมพ์คำสั่งใน Terminal
+      </p>
+
+      <div class="cover-badges">
+        <span class="cover-badge"><b>✓</b> ฟรี 100%</span>
+        <span class="cover-badge"><b>✓</b> ไม่ใช้ Terminal</span>
+        <span class="cover-badge"><b>✓</b> ใช้เวลาประมาณ 15 นาที</span>
+      </div>
+
+      <div class="cover-card">
+        <h3>สิ่งที่ต้องมีก่อนเริ่ม</h3>
+        <ul class="cover-list">
+          <li><b>บัญชี GitHub</b> สมัครฟรีและยืนยันอีเมลแล้ว</li>
+          <li><b>GitHub Desktop</b> ดาวน์โหลดและติดตั้งจาก desktop.github.com</li>
+          <li><b>ไฟล์เว็บ</b> index.html, style.css, script.js และ favicon.svg</li>
+        </ul>
+      </div>
+
+      <div class="cover-foot">
+        <span><strong>ชื่อ-นามสกุล</strong><br>Personal Portfolio</span>
+        <span>คู่มือฉบับภาษาไทย · หน้า 1 / 4</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== หน้า 2: เตรียมเว็บ ===================== -->
+  <section class="page content-page">
+    <div class="page-top">
+      <span class="mark"><span class="mark-symbol">&lt;/&gt;</span> PORTFOLIO PLAYBOOK</span>
+      <span class="page-number">หน้า 2 / 4</span>
+    </div>
+
+    <div style="margin-top: 9mm;">
+      <p class="kicker">ก่อนอัปโหลด</p>
+      <h2>เตรียมเว็บให้พร้อม<span class="dot">.</span></h2>
+      <p class="page-intro">
+        ใช้เวลา 5 นาทีตรวจ 4 อย่างนี้ก่อนเผยแพร่ เพื่อไม่ให้เจอปัญหา 404
+        หรือรูปไม่ขึ้นทีหลัง
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="soft-card" style="padding: 5mm;">
+        <span class="label">01 · ไฟล์</span>
+        <h3 style="margin: 2.5mm 0 2mm; font-size: 11pt;">วางไฟล์ให้ถูกตำแหน่ง</h3>
+        <div class="file-tree">
+          <b>โฟลเดอร์โปรเจกต์/</b><br>
+          ├── <span class="req">index.html</span> &nbsp;<span style="color:#15803d;">← ต้องอยู่ root</span><br>
+          ├── style.css<br>
+          ├── script.js<br>
+          ├── favicon.svg<br>
+          └── assets/<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;└── images/<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── profile.jpg<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── project-1.jpg
+        </div>
+        <p class="small muted" style="margin-top: 2.5mm;">
+          ชื่อไฟล์ควรเป็นภาษาอังกฤษตัวเล็ก ไม่มีเว้นวรรค
+          และระวังตัวพิมพ์เล็ก-ใหญ่ให้ตรงกับที่เขียนใน HTML
+        </p>
+      </div>
+
+      <div class="soft-card" style="padding: 5mm;">
+        <span class="label">02 · ข้อความ</span>
+        <h3 style="margin: 2.5mm 0 2mm; font-size: 11pt;">แก้ข้อมูลส่วนตัว</h3>
+        <p class="small muted">เปิด <code>index.html</code> แล้วค้นหา / แทนที่:</p>
+        <table class="table" style="margin-top: 2mm;">
+          <tr><td style="width: 50%;"><code>ชื่อ-นามสกุล</code></td><td>ชื่อจริงของคุณ</td></tr>
+          <tr><td><code>your.email@example.com</code></td><td>อีเมลจริง</td></tr>
+          <tr><td><code>yourusername</code></td><td>ชื่อผู้ใช้ GitHub</td></tr>
+          <tr><td><code>@yourlineid</code></td><td>LINE ID</td></tr>
+          <tr><td><code>CN</code></td><td>อักษรย่อชื่อ</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid-2 mt-4">
+      <div class="soft-card" style="padding: 5mm;">
+        <span class="label">03 · รูปภาพ</span>
+        <h3 style="margin: 2.5mm 0 2mm; font-size: 11pt;">ใส่รูปของคุณเอง</h3>
+        <p class="small muted" style="margin-bottom: 2.5mm;">
+          สร้างโฟลเดอร์ <code>assets/images/</code> แล้ววางรูป จากนั้นแก้บล็อก
+          <code>photo-placeholder</code> เป็น:
+        </p>
+        <div class="code">&lt;<span class="c">img</span> <span class="v">src</span>="assets/images/profile.jpg"<br>&nbsp;&nbsp;&nbsp;&nbsp; <span class="v">alt</span>="รูปโปรไฟล์ของฉัน"&gt;</div>
+        <p class="small muted" style="margin-top: 2.5mm;">
+          รูปโปรไฟล์ ~800×800 px, รูปผลงาน 16:9 (~1200×675 px)
+          และบีบอัดให้เล็กกว่า 300 KB ต่อรูป
+        </p>
+      </div>
+
+      <div class="soft-card" style="padding: 5mm;">
+        <span class="label">04 · สีและธีม</span>
+        <h3 style="margin: 2.5mm 0 2mm; font-size: 11pt;">ปรับสีได้ในที่เดียว</h3>
+        <p class="small muted" style="margin-bottom: 2.5mm;">
+          เปิด <code>style.css</code> แล้วแก้ตัวแปรตอนต้นไฟล์:
+        </p>
+        <div class="code"><span class="c">:root</span> {<br>
+          &nbsp;&nbsp;<span class="v">--primary</span>: #1d4ed8;&nbsp;&nbsp;<span style="color:#94a3b8;">/* สีหลัก */</span><br>
+          &nbsp;&nbsp;<span class="v">--primary-2</span>: #0ea5e9;<br>
+          &nbsp;&nbsp;<span class="v">--bg</span>: #f6f8fc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#94a3b8;">/* พื้นหลัง */</span><br>
+          &nbsp;&nbsp;<span class="v">--text</span>: #0c1a32;<br>
+        }</div>
+      </div>
+    </div>
+
+    <div class="callout blue mt-4">
+      <span class="callout-icon">i</span>
+      <span>
+        <strong>ทดสอบก่อนอัปโหลด:</strong>
+        เปิด <code>index.html</code> แล้วลองกดเมนูทุกข้อ สลับโหมดมืด/สว่าง
+        ย่อหน้าต่างให้แคบเหมือนมือถือ และกดลิงก์ติดต่อทุกช่องทาง
+        ถ้าทุกอย่างทำงาน แสดงว่าพร้อมขึ้นเว็บแล้ว
+      </span>
+    </div>
+
+    <div class="page-footer">
+      <span><b>Portfolio Playbook</b> · เตรียมความพร้อม</span>
+      <span>หน้า 2 / 4</span>
+    </div>
+  </section>
+
+  <!-- ===================== หน้า 3: อัปขึ้น GitHub ===================== -->
+  <section class="page content-page">
+    <div class="page-top">
+      <span class="mark"><span class="mark-symbol">&lt;/&gt;</span> PORTFOLIO PLAYBOOK</span>
+      <span class="page-number">หน้า 3 / 4</span>
+    </div>
+
+    <div style="margin-top: 9mm;">
+      <p class="kicker">ขั้นตอนที่ 1–5</p>
+      <h2>อัปขึ้น GitHub<span class="dot">.</span></h2>
+      <p class="page-intro">
+        ทำตามลำดับนี้โดยใช้เมาส์และหน้าจอทั้งหมด ไม่ต้องพิมพ์คำสั่งใด ๆ
+        ชื่อปุ่มอาจต่างกันเล็กน้อยตามเวอร์ชันของ GitHub Desktop
+      </p>
+    </div>
+
+    <div class="number-list">
+      <div class="number-item">
+        <div>
+          <h3>สมัคร GitHub และติดตั้ง GitHub Desktop</h3>
+          <p>สมัครที่ github.com → ยืนยันอีเมล → ดาวน์โหลดจาก desktop.github.com → เปิดโปรแกรมแล้วกด Sign in to GitHub.com</p>
+        </div>
+      </div>
+
+      <div class="number-item">
+        <div>
+          <h3>ย้ายโปรเจกต์ออกจาก OneDrive</h3>
+          <p>คัดลอกโฟลเดอร์เว็บไปไว้ที่ <code>C:\Projects\portfolio</code> เพื่อลดปัญหาไฟล์ถูกล็อกหรือซิงก์ชนกับ Git</p>
+          <p class="muted">ถ้าไม่มีโฟลเดอร์ ให้สร้างใหม่ใน File Explorer ได้เลย</p>
+        </div>
+      </div>
+
+      <div class="number-item">
+        <div>
+          <h3>สร้าง Repository ใน GitHub Desktop</h3>
+          <p>ไปที่ <strong>File → New repository…</strong> แล้วกรอก:</p>
+          <p>
+            <strong>Name:</strong> <code>ชื่อผู้ใช้github.github.io</code>
+            (เช่น <code>somchai.github.io</code>)<br>
+            <strong>Local path:</strong> <code>C:\Projects</code><br>
+            <strong>Initialize with README:</strong> ไม่ต้องติ๊ก
+          </p>
+          <p>กด <strong>Create repository</strong> แล้วคัดลอกไฟล์เว็บทั้งหมดไปวางในโฟลเดอร์ที่สร้าง</p>
+        </div>
+      </div>
+
+      <div class="number-item">
+        <div>
+          <h3>Commit ไฟล์ทั้งหมด</h3>
+          <p>กลับมาที่ GitHub Desktop → แท็บ <strong>Changes</strong> → ช่อง Summary พิมพ์ <code>First commit</code> → กด <strong>Commit to main</strong></p>
+          <p class="muted">ถ้าเห็นไฟล์ครบทั้ง HTML, CSS, JS และรูป แปลว่าพร้อมเผยแพร่</p>
+        </div>
+      </div>
+
+      <div class="number-item">
+        <div>
+          <h3>Publish repository</h3>
+          <p>กด <strong>Publish repository</strong> ด้านบน → <strong>เอาติ๊ก “Keep this code private” ออก</strong> → กด Publish repository อีกครั้ง</p>
+          <p class="muted">GitHub Pages เวอร์ชันฟรีต้องใช้ repository แบบ Public</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-item"><b>1. ติดตั้ง</b><span>GitHub Desktop<br>และ Sign in</span></div>
+      <div class="flow-item"><b>2. สร้าง Repo</b><span>ชื่อ<br>username.github.io</span></div>
+      <div class="flow-item"><b>3. Commit</b><span>ใส่ Summary<br>แล้ว Commit to main</span></div>
+      <div class="flow-item"><b>4. Publish</b><span>Public<br>แล้ว Publish</span></div>
+    </div>
+
+    <div class="callout mt-4">
+      <span class="callout-icon">!</span>
+      <span>
+        <strong>สำคัญ:</strong> ชื่อ repository ต้องเป็นชื่อผู้ใช้ GitHub ของคุณตามด้วย
+        <code>.github.io</code> และเป็นตัวพิมพ์เล็กทั้งหมด
+        ถ้าตั้งชื่ออื่น เช่น <code>portfolio</code> เว็บจะอยู่ที่
+        <code>ชื่อผู้ใช้.github.io/portfolio/</code> แทน
+      </span>
+    </div>
+
+    <div class="page-footer">
+      <span><b>Portfolio Playbook</b> · อัปขึ้น GitHub</span>
+      <span>หน้า 3 / 4</span>
+    </div>
+  </section>
+
+  <!-- ===================== หน้า 4: เปิด Pages + ดูแลเว็บ ===================== -->
+  <section class="page content-page">
+    <div class="page-top">
+      <span class="mark"><span class="mark-symbol">&lt;/&gt;</span> PORTFOLIO PLAYBOOK</span>
+      <span class="page-number">หน้า 4 / 4</span>
+    </div>
+
+    <div style="margin-top: 9mm;">
+      <p class="kicker">ขั้นตอนที่ 6–7</p>
+      <h2>เปิด Pages และอัปเดตเว็บ<span class="dot">.</span></h2>
+      <p class="page-intro">
+        หลัง Publish repository แล้ว เหลือเปิด GitHub Pages อีกขั้นเดียว
+        เว็บจะออนไลน์ภายใน 1–3 นาที
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="step-card">
+        <h3><span class="mini-num">6</span> เปิด GitHub Pages</h3>
+        <p>ใน GitHub Desktop กด <strong>Repository → View on GitHub</strong> แล้วทำตามนี้:</p>
+        <p style="margin-top: 2mm;">
+          <strong>Settings</strong> → เมนูซ้าย <strong>Pages</strong><br>
+          <strong>Source:</strong> Deploy from a branch<br>
+          <strong>Branch:</strong> main &nbsp;·&nbsp; <strong>Folder:</strong> / (root)<br>
+          กด <strong>Save</strong> แล้วรอ 1–3 นาที
+        </p>
+        <div class="url-box" style="margin-top: 3mm;">
+          <span class="label">URL</span>
+          <span>https://ชื่อผู้ใช้.github.io/</span>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <h3><span class="mini-num">7</span> อัปเดตเว็บในอนาคต</h3>
+        <p>แก้ไฟล์ในโฟลเดอร์ → เปิด GitHub Desktop → แท็บ Changes → พิมพ์ Summary → <strong>Commit to main</strong> → <strong>Push origin</strong></p>
+        <p style="margin-top: 2mm;">รอ 1–2 นาที แล้วกด <code>Ctrl + F5</code> ที่หน้าเว็บ</p>
+        <div class="callout green" style="margin-top: 3mm; padding: 3mm;">
+          <span class="callout-icon">✓</span>
+          <span>ครั้งต่อไปใช้แค่ Commit → Push origin ไม่ต้องสร้าง repo ใหม่</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 6mm;">
+      <h3 style="font-size: 11pt; margin-bottom: 2mm;">ลิงก์ที่จะได้</h3>
+      <table class="table">
+        <thead>
+          <tr><th style="width: 44%;">ชื่อ repository</th><th>URL ของเว็บ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>ชื่อผู้ใช้.github.io</code></td><td><code>https://ชื่อผู้ใช้.github.io/</code></td></tr>
+          <tr><td><code>portfolio</code></td><td><code>https://ชื่อผู้ใช้.github.io/portfolio/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 5mm;">
+      <h3 style="font-size: 11pt; margin-bottom: 2mm;">ถ้าเจอปัญหา</h3>
+      <table class="table">
+        <thead>
+          <tr><th style="width: 34%;">อาการ</th><th>วิธีแก้</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>เปิดแล้วขึ้น 404</td><td class="fix">รอ 2–3 นาที · ตรวจ <code>index.html</code> อยู่ root · ตรวจ branch เป็น main · ตรวจว่า Pages ถูกเปิดแล้ว</td></tr>
+          <tr><td>CSS หรือรูปไม่โหลด</td><td class="fix">ตรวจชื่อไฟล์ตัวพิมพ์เล็ก-ใหญ่ · ใช้ path <code>assets/images/...</code> โดยไม่มี <code>/</code> นำหน้า</td></tr>
+          <tr><td>แก้แล้วเว็บไม่เปลี่ยน</td><td class="fix">รอ 1–2 นาที · กด <code>Ctrl + F5</code> · ตรวจว่ากด Push origin สำเร็จ</td></tr>
+          <tr><td>GitHub ไม่ยอมเปิด Pages</td><td class="fix">repository ต้องเป็น Public (แพ็กเกจฟรี) · ตรวจอีเมลยืนยันแล้ว</td></tr>
+          <tr><td>Commit ไม่ได้</td><td class="fix">ปิดโปรแกรมที่เปิดไฟล์อยู่ · ย้ายโปรเจกต์ออกจาก OneDrive</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout blue mt-4">
+      <span class="callout-icon">✓</span>
+      <span>
+        <strong>เช็กก่อนส่งงาน:</strong> เปิดเว็บจริงบนมือถือ · กดเมนูครบทุกข้อ ·
+        ทดสอบโหมดมืด/สว่าง · กดลิงก์อีเมล/GitHub/Facebook/LINE ·
+        ตรวจว่าไม่มีคำว่า <code>example.com</code> หรือ <code>yourusername</code> เหลืออยู่
+      </span>
+    </div>
+
+    <div class="page-footer">
+      <span><b>Portfolio Playbook</b> · เปิด Pages และดูแลเว็บ</span>
+      <span>จบแล้ว — ขอให้สนุกกับพอร์ตโฟลิโอของคุณ!</span>
+    </div>
+  </section>
+</body>
+</html>
