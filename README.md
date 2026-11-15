@@ -20,7 +20,7 @@
 | `editor.css` / `editor.js` | โหมดแก้ไขข้อมูลในเบราว์เซอร์ (โหลดเฉพาะตอนเปิดในเครื่อง หรือเติม `?edit=1`) |
 | `favicon.svg` | ไอคอนแท็บเบราว์เซอร์ (วาดเอง แก้สีได้) |
 | `guide.html` | คู่มือขึ้น GitHub Pages ฉบับพิมพ์ได้ (กดปุ่มเพื่อบันทึกเป็น PDF) |
-| `deploy-guide.pdf` / `deploy-guide.png` | คู่มือขึ้น GitHub Pages แบบไฟล์พร้อมใช้ (ถ้ามีในโฟลเดอร์) |
+| `deploy-guide.pdf` / `deploy-guide.png` | คู่มือชุดเดียวกันแบบไฟล์พร้อมใช้ (ดาวน์โหลดได้จากเว็บที่เผยแพร่แล้ว) |
 | `README.md` | คู่มือฉบับข้อความ (ไฟล์นี้) |
 
 > **ก่อนอัปขึ้น GitHub Pages** ต้องมี `index.html` อยู่ที่ "root" ของ repository
@@ -276,7 +276,11 @@ html[data-theme="dark"] {
 > **คู่มือแบบภาพ:** เปิด `guide.html` แล้วกดปุ่ม **“พิมพ์ / บันทึกเป็น PDF”**
 > มุมขวาล่าง จากนั้นเลือก **Save as PDF** ในหน้าต่างพิมพ์
 > (หรือกด `Ctrl + P` แล้วเลือก Save as PDF)
-> ไฟล์ `deploy-guide.pdf` / `deploy-guide.png` ที่แนบมาคือคู่มือชุดเดียวกัน
+>
+> ไฟล์พร้อมใช้: [`deploy-guide.pdf`](deploy-guide.pdf) และ [`deploy-guide.png`](deploy-guide.png)
+> ดาวน์โหลดได้จากเว็บจริงที่
+> <https://ncikik.github.io/portfolio/deploy-guide.pdf> และ
+> <https://ncikik.github.io/portfolio/deploy-guide.png>
 
 วิธีนี้ใช้ **GitHub Desktop** ทั้งหมด ไม่ต้องใช้ Terminal และไม่ต้องพิมพ์โค้ดบนเว็บ
 ทำครั้งแรกประมาณ 10–15 นาที
